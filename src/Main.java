@@ -66,19 +66,18 @@ class Consumer1 implements Runnable {
     public void run() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(outputFile))) {
             while (!Thread.currentThread().isInterrupted()) {
-                Integer number = sourceQueue.poll(100, TimeUnit.MILLISECONDS); // Poll with timeout
+                Integer number = sourceQueue.poll(100, TimeUnit.MILLISECONDS); 
                 if (number != null) {
-                    // Perform operations on the number (e.g., square it)
                     int result = number * number;
                     writer.println(name + ": " + result);
                     writer.flush();
                 } else {
-                    break; // Break the loop if no more elements are available
+                    break; 
                 }
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            Thread.currentThread().interrupt(); // Restore interrupt status
+            Thread.currentThread().interrupt(); 
         }
     }
 }
@@ -98,14 +97,14 @@ class Consumer2 implements Runnable {
     public void run() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(outputFile))) {
             while (!Thread.currentThread().isInterrupted()) {
-                Integer number = sourceQueue.poll(100, TimeUnit.MILLISECONDS); // Poll with timeout
+                Integer number = sourceQueue.poll(100, TimeUnit.MILLISECONDS); 
                 if (number != null) {
-                    // Perform operations on the number (e.g., cube it)
+                
                     int result = number * number * number;
                     writer.println(name + ": " + result);
                     writer.flush();
                 } else {
-                    break; // Break the loop if no more elements are available
+                    break; 
                 }
             }
         } catch (IOException | InterruptedException e) {
@@ -130,16 +129,16 @@ class NumberCopier implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Integer number = sourceQueue.poll(100, TimeUnit.MILLISECONDS); // Poll with timeout
+                Integer number = sourceQueue.poll(100, TimeUnit.MILLISECONDS); 
                 if (number != null) {
                     consumer1Queue.put(number);
                     consumer2Queue.put(number);
                 } else {
-                    break; // Break the loop if no more elements are available
+                    break; 
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                Thread.currentThread().interrupt(); // Restore interrupt status
+                Thread.currentThread().interrupt(); 
             }
         }
     }
